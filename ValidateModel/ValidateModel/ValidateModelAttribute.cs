@@ -34,16 +34,18 @@ namespace ValidateModel
                 }
 
                 var propertyInfo = findType?.GetProperty(findKey);
-                if (propertyInfo is null) continue;
+                if (propertyInfo is null) break;
+
                 findType = itemKey.EndsWith("]")
-                    ? propertyInfo.PropertyType.GetProperty("Item")?.PropertyType
+                    ? propertyInfo.PropertyType.IsArray ? propertyInfo.PropertyType.GetElementType()
+                    : propertyInfo.PropertyType.GetProperty("Item")?.PropertyType
                     : propertyInfo.PropertyType;
 
                 var attribute =
-                    (JsonPropertyAttribute) propertyInfo.GetCustomAttribute(typeof(JsonPropertyAttribute), true);
+                    (JsonPropertyAttribute)propertyInfo.GetCustomAttribute(typeof(JsonPropertyAttribute), true);
 
                 var propName = itemKey;
-                if (attribute is {PropertyName: { }})
+                if (attribute is { PropertyName: { } })
                     propName = attribute.PropertyName;
                 propNames.Add(propName + indexValue);
             }
