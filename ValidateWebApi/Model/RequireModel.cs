@@ -6,7 +6,7 @@ namespace ValidateWebApi.Model
     public class RequireModel
     {
         [JsonProperty("a")] 
-        [Range(0, 1)]
+        [Range(0, 1,ErrorMessage = "中文错误")]
         public int A { get; set; }
     }
 }

@@ -69,13 +69,28 @@ namespace ValidateModel
             var result = context.ModelState.Keys
                 .SelectMany(key =>
                 {
+                    var lang = context.HttpContext.Request.Headers[ServiceCollectionExtend.LangHeader].ToString();
+                    
                     var baseType = context.ActionArguments.Values.First().GetType();
                     var propName = GetPropName(key, baseType);
 
-                    return context.ModelState[key].Errors.Select(x => new ValidationError()
+                    return context.ModelState[key].Errors.Select(x =>
                     {
-                        FieldError = x.ErrorMessage,
-                        FieldName = propName
+                        var errorMsg = x.ErrorMessage;
+                        
+                        if (ServiceCollectionExtend.LangDic.ContainsKey(lang))
+                        {
+                            if (ServiceCollectionExtend.LangDic[lang].ContainsKey(errorMsg))
+                            {
+                                errorMsg = ServiceCollectionExtend.LangDic[lang][errorMsg];
+                            }
+                        }
+                        
+                        return new ValidationError
+                        {
+                            FieldError = errorMsg,
+                            FieldName = propName
+                        };
                     });
                 });
 
