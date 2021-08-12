@@ -4,12 +4,18 @@ using System.Linq;
 using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 
 namespace ValidateModel
 {
     public class ValidateModelAttribute : ActionFilterAttribute
     {
+        public ValidateModelAttribute(IConfiguration httpRequestFeature = null)
+        {
+            
+        }
+        
         /// <summary>
         ///  获取对象属性
         /// </summary>

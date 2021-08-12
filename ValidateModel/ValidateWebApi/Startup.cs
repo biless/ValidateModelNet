@@ -22,12 +22,14 @@ namespace ValidateWebApi
         {
             services.AddControllers().ConfigureApiBehaviorOptions(options => 
             {   
-                options.SuppressModelStateInvalidFilter = true;     
+                options.SuppressModelStateInvalidFilter = true;
             });
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "ValidateWebApi", Version = "v1"});
             });
+            
             services.AddControllersWithViews(config=>config.Filters.Add(typeof(ValidateModelAttribute)));
         }
 
