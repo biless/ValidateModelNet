@@ -35,8 +35,10 @@ namespace ValidateModel
 
                 if (itemKey.EndsWith("]"))
                 {
-                    findKey = itemKey.Substring(0, itemKey.Length - 3);
-                    indexValue = itemKey.Substring(itemKey.Length - 3, 3);
+                    var index = itemKey.IndexOf('[');
+                    
+                    findKey = itemKey.Substring(0, index);
+                    indexValue = itemKey.Substring(index, itemKey.Length - index);
                 }
 
                 var propertyInfo = findType?.GetProperty(findKey);
