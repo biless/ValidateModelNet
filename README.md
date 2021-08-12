@@ -14,7 +14,7 @@ services.AddValidateMode(dic =>
     });
 },"Accept-Language");
 ```
-### 使用前注意
+##### 使用前注意
 
 使用前需要屏蔽aspnet core的系统处理函数添加如下代码即可屏蔽
 ```csharp
@@ -22,6 +22,15 @@ services.AddControllers().ConfigureApiBehaviorOptions(options =>
             {
                 options.SuppressModelStateInvalidFilter = true;
             });
+```
+
+# 自定义错误返回
+可以定义错误返回的格式代码如下
+```csharp
+services.AddValidateModeResultMap(errors => new ResultError
+{
+    Error = errors.FirstOrDefault().FieldError
+});
 ```
 
 # 支持类型

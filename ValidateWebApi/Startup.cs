@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -6,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using ValidateModel;
+using ValidateWebApi.Model;
 
 namespace ValidateWebApi
 {
@@ -40,6 +42,11 @@ namespace ValidateWebApi
                     { "中文错误", "Error" },
                 });
             },"Accept-Language");
+            
+            services.AddValidateModeResultMap(errors => new ResultError
+            {
+                Error = errors.FirstOrDefault().FieldError
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

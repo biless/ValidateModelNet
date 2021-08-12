@@ -94,7 +94,10 @@ namespace ValidateModel
                     });
                 });
 
-            context.Result = new ObjectResult(result.FirstOrDefault());
+            if (ServiceCollectionExtend.ResultAction != null)
+                context.Result = new ObjectResult(ServiceCollectionExtend.ResultAction.Invoke(result));
+            else
+                context.Result = new ObjectResult(result.FirstOrDefault());
         }
     }
 }
