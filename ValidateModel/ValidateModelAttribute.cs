@@ -71,7 +71,7 @@ namespace ValidateModel
                 {
                     var lang = context.HttpContext.Request.Headers[ServiceCollectionExtend.LangHeader].ToString();
                     
-                    var baseType = context.ActionArguments.Values.First().GetType();
+                    var baseType = context.ActionArguments.Values.FirstOrDefault()?.GetType();
                     var propName = GetPropName(key, baseType);
 
                     return context.ModelState[key].Errors.Select(x =>
